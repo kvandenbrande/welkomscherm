@@ -9,7 +9,7 @@ pygame.init()
 #location check
 strs = subprocess.check_output(shlex.split('ip r l'))
 gateway = strs.split('default via')[-1].split()[0]
-gateway = "Antwerpen" #default gateway
+LOCATION = "Antwerpen" #default gateway
 
 if gateway == "10.0.0.249":
     LOCATION = "Antwerpen"
