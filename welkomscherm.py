@@ -72,17 +72,17 @@ pygame.display.flip()
 
 
 #image config
-logo = pygame.image.load('/img/logo.png').convert_alpha()
-sms = pygame.image.load('/img/8876.jpg')
+logo = pygame.image.load('logo.png').convert_alpha()
+sms = pygame.image.load('8876.jpg')
 sms = sms.convert()
 sms = pygame.transform.scale(sms, max(modes))
-event = pygame.image.load('/img/vooruitblik.jpg')
+event = pygame.image.load('vooruitblik.jpg')
 event = event.convert()
 event = pygame.transform.scale(event, max(modes))
-partner1 = pygame.image.load('/img/PP_CORP.jpg')
+partner1 = pygame.image.load('PP_CORP.jpg')
 partner1 = partner1.convert()
 partner1 = pygame.transform.scale(partner1, max(modes))
-partner2 = pygame.image.load('/img/PP_BUSIACT.jpg')
+partner2 = pygame.image.load('PP_BUSIACT.jpg')
 partner2 = partner2.convert()
 partner2 = pygame.transform.scale(partner2, max(modes))
 
