@@ -18,7 +18,6 @@ if gateway == "10.1.0.1":
 
 
 #config
-#TV Waasland resolutie 1920x1080
 STARTUP = pygame.font.SysFont("monospace", 25)
 TITLE = pygame.font.SysFont("roboto", 50, bold=True)
 WHITE = (255, 255, 255)
@@ -34,6 +33,7 @@ x, y = screen.get_size()
 
 
 #locations
+#TV Waasland resolutie 1920x1080 as refence to other resolutions
 if x == 1920 and y == 1080:
     L_STARTUP_X= 700
     L_STARTUP_Y= 540
@@ -72,17 +72,17 @@ pygame.display.flip()
 
 
 #image config
-logo = pygame.image.load(os.path.join('img/logo.png')).convert_alpha()
-sms = pygame.image.load(os.path.join('img/8876.jpg'))
+logo = pygame.image.load(os.path.join('logo.png')).convert_alpha()
+sms = pygame.image.load(os.path.join('8876.jpg'))
 sms = sms.convert()
 sms = pygame.transform.scale(sms, max(modes))
-event = pygame.image.load(os.path.join('img/vooruitblik.jpg'))
+event = pygame.image.load(os.path.join('vooruitblik.jpg'))
 event = event.convert()
 event = pygame.transform.scale(event, max(modes))
-partner1 = pygame.image.load(os.path.join('img/PP_CORP.jpg'))
+partner1 = pygame.image.load(os.path.join('PP_CORP.jpg'))
 partner1 = partner1.convert()
 partner1 = pygame.transform.scale(partner1, max(modes))
-partner2 = pygame.image.load(os.path.join('img/PP_BUSIACT.jpg'))
+partner2 = pygame.image.load(os.path.join('PP_BUSIACT.jpg'))
 partner2 = partner2.convert()
 partner2 = pygame.transform.scale(partner2, max(modes))
 
