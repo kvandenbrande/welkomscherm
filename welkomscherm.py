@@ -24,6 +24,7 @@ WHITE = (255, 255, 255)
 WAITTIME = 10   #default time to wait between images (in seconds)
 MYSQLSERVER = "10.0.0.205"
 THICKNESS = 40
+LOCALEPATH = "/home/pi/welkomscherm/img/"
 
 #set up the window, max screensize, fullscreen no frames
 modes = pygame.display.list_modes()
@@ -72,17 +73,17 @@ pygame.display.flip()
 
 
 #image config
-logo = pygame.image.load('/home/pi/welkomscherm/img/logo.png').convert_alpha()
-sms = pygame.image.load('/home/pi/welkomscherm/img/8876.jpg')
+logo = pygame.image.load(LOCALEPATH +'logo.png').convert_alpha()
+sms = pygame.image.load(LOCALEPATH +'8876.jpg')
 sms = sms.convert()
 sms = pygame.transform.scale(sms, max(modes))
-event = pygame.image.load('/home/pi/welkomscherm/img/scherm.jpg')
+event = pygame.image.load(LOCALEPATH +'scherm.jpg')
 event = event.convert()
 event = pygame.transform.scale(event, max(modes))
-partner1 = pygame.image.load('/home/pi/welkomscherm/img/PP_CORP.jpg')
+partner1 = pygame.image.load(LOCALEPATH +'PP_CORP.jpg')
 partner1 = partner1.convert()
 partner1 = pygame.transform.scale(partner1, max(modes))
-partner2 = pygame.image.load('/home/pi/welkomscherm/img/PP_BUSIACT.jpg')
+partner2 = pygame.image.load(LOCALEPATH +'PP_BUSIACT.jpg')
 partner2 = partner2.convert()
 partner2 = pygame.transform.scale(partner2, max(modes))
 
