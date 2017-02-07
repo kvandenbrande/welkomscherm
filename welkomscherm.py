@@ -76,7 +76,7 @@ logo = pygame.image.load('/home/pi/welkomscherm/img/logo.png').convert_alpha()
 sms = pygame.image.load('/home/pi/welkomscherm/img/8876.jpg')
 sms = sms.convert()
 sms = pygame.transform.scale(sms, max(modes))
-event = pygame.image.load('/home/pi/welkomscherm/img/vooruitblik.jpg')
+event = pygame.image.load('/home/pi/welkomscherm/img/scherm.jpg')
 event = event.convert()
 event = pygame.transform.scale(event, max(modes))
 partner1 = pygame.image.load('/home/pi/welkomscherm/img/PP_CORP.jpg')
@@ -137,7 +137,7 @@ while True:
     pygame.display.flip()
     time.sleep(WAITTIME)
 
-    #reclame vooruitblik
+    #reclame events
     screen.blit(event,(0,0))
     pygame.display.flip()
     time.sleep(WAITTIME)
