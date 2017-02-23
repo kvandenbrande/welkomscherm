@@ -18,6 +18,10 @@ if gateway == "10.1.0.1":
 
 
 #config
+pidf = open("./online.tmp","w")
+pidf.write(str(os.getpid()))
+pidf.close()
+
 STARTUP = pygame.font.SysFont("monospace", 25)
 TITLE = pygame.font.SysFont("roboto", 50, bold=True)
 WHITE = (255, 255, 255)
