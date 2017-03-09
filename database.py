@@ -18,3 +18,16 @@ def get_events(location):
         count = cursor.rowcount
         #events = "Nieuwsjaarsreceptie"
     return events, count
+
+
+def get_agenda():
+
+    db=MySQLdb.connect(host="10.0.0.205",port=3306,user="welkom",passwd="eventsopscherm",db="kvkaw")
+    cursor=db.cursor()
+    
+    agenda = None
+    cursor.execute("SELECT event, datum FROM kameragenda WHERE datum >= CURDATE() ORDER BY datum ASC LIMIT 3")
+    agenda = cursor.fetchall()
+    count = cursor.rowcount
+
+    return agenda, count
