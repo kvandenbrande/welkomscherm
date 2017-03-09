@@ -29,5 +29,4 @@ def get_agenda():
     cursor.execute("SELECT event, datum FROM kameragenda WHERE datum >= CURDATE() ORDER BY datum ASC LIMIT 3")
     agenda = cursor.fetchall()
     count = cursor.rowcount
-
     return agenda, count
