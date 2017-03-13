@@ -1,5 +1,6 @@
 import pygame, time, sys, os
-import subprocess, shlex
+import subprocess, json
+from subprocess import Popen
 from pygame.locals import *
 from background import load_background
 from database import get_events
@@ -8,15 +9,11 @@ from database import get_agenda
 pygame.init()
 
 #location check
-strs = subprocess.check_output(shlex.split('ip r l'))
-gateway = strs.split('default via')[-1].split()[0]
-LOCATION = "Antwerpen" #default gateway
+with open ('/home/pi/Desktop/welkomscherm_conf.json','r') as f:
+    config = json.load(f)
 
-if gateway == "10.0.0.249":
-    LOCATION = "Antwerpen"
-if gateway == "10.1.0.1":
-    LOCATION = "Waasland"
-
+LOCATION = config['LOCATION']['vestiging']
+LOCATION_DETAIL = config['LOCATION']['locatie']
 
 #config
 pidf = open("./online.tmp","w")
@@ -24,6 +21,7 @@ pidf.write(str(os.getpid()))
 pidf.close()
 
 STARTUP = pygame.font.SysFont("monospace", 25)
+TEXT = pygame.font.SysFont("roboto", 35, bold=True)
 TITLE = pygame.font.SysFont("roboto", 50, bold=True)
 TITLE1 = pygame.font.SysFont("roboto", 75, bold=True)
 WHITE = (255, 255, 255)
@@ -31,6 +29,8 @@ WAITTIME = 10   #default time to wait between images (in seconds)
 MYSQLSERVER = "10.0.0.205"
 THICKNESS = 40
 LOCALEPATH = "/home/pi/welkomscherm/img/"
+MOVIE = '/home/pi/Desktop/jaaroverzicht_2016.mp4'
+movie_count=0
 
 #set up the window, max screensize, fullscreen no frames
 modes = pygame.display.list_modes()
@@ -66,6 +66,12 @@ if x == 1920 and y == 1080:
     L_KA_2_E1_Y = 500
     L_KA_2_E2_Y = 800
     L_KA_1_E1_Y = 500
+    L_KA_3_T1_Y = 375
+    L_KA_3_T2_Y = 575
+    L_KA_3_T3_Y = 775
+    L_KA_2_T1_Y = 575
+    L_KA_2_T2_Y = 875
+    L_KA_1_T1_Y = 575
 
 else:
     L_STARTUP_X= (700*x)/1920
@@ -92,6 +98,12 @@ else:
     L_KA_2_E1_Y = (500*y)/1080
     L_KA_2_E2_Y = (800*y)/1080
     L_KA_1_E1_Y = (500*y)/1080
+    L_KA_3_T1_Y = (375*y)/1080
+    L_KA_3_T2_Y = (575*y)/1080
+    L_KA_3_T3_Y = (775*y)/1080
+    L_KA_2_T1_Y = (575*y)/1080
+    L_KA_2_T2_Y = (875*y)/1080
+    L_KA_1_T1_Y = (575*y)/1080
 
 #startup screen 
 label = STARTUP.render("... warming up, please wait ...", 5, (WHITE))
@@ -188,16 +200,22 @@ while True:
                 screen.blit(agendadatum1, (L_KA_ED_X, L_KA_3_E1_Y))
                 agendaitem1 = TITLE.render(agenda[0][0], 5, (WHITE))
                 screen.blit(agendaitem1, (L_KA_ET_X, L_KA_3_E1_Y))
+                agendatype1 = TEXT.render(agenda[0][2], 5, (WHITE))
+                screen.blit(agendatype1, (L_KA_ET_X, L_KA_3_T1_Y))
                 #event2
                 agendadatum2 = TITLE.render(agenda[1][1], 5, (WHITE))
                 screen.blit(agendadatum2, (L_KA_ED_X, L_KA_3_E2_Y))
                 agendaitem2 = TITLE.render(agenda[1][0], 5, (WHITE))
                 screen.blit(agendaitem2, (L_KA_ET_X, L_KA_3_E2_Y))
+                agendatype2 = TEXT.render(agenda[1][2], 5, (WHITE))
+                screen.blit(agendatype2, (L_KA_ET_X, L_KA_3_T2_Y))
                 #event3
                 agendadatum3 = TITLE.render(agenda[2][1], 5, (WHITE))
                 screen.blit(agendadatum3, (L_KA_ED_X, L_KA_3_E3_Y))
                 agendaitem3 = TITLE.render(agenda[2][0], 5, (WHITE))
                 screen.blit(agendaitem3, (L_KA_ET_X, L_KA_3_E3_Y))
+                agendatype3 = TEXT.render(agenda[2][2], 5, (WHITE))
+                screen.blit(agendatype3, (L_KA_ET_X, L_KA_3_T3_Y))
                 #add logo
                 screen.blit(logo, pygame.rect.Rect(L_LOGO_X,L_LOGO_Y,128,128))
                 pygame.display.flip()
@@ -217,11 +235,15 @@ while True:
                 screen.blit(agendadatum1, (L_KA_ED_X, L_KA_2_E1_Y))
                 agendaitem1 = TITLE.render(agenda[0][0], 5, (WHITE))
                 screen.blit(agendaitem1, (L_KA_ET_X, L_KA_2_E1_Y))
+                agendatype1 = TEXT.render(agenda[0][2], 5, (WHITE))
+                screen.blit(agendatype1, (L_KA_ET_X, L_KA_2_T1_Y))
                 #event2
                 agendadatum2 = TITLE.render(agenda[1][1], 5, (WHITE))
                 screen.blit(agendadatum2, (L_KA_ED_X, L_KA_2_E2_Y))
                 agendaitem2 = TITLE.render(agenda[1][0], 5, (WHITE))
                 screen.blit(agendaitem2, (L_KA_ET_X, L_KA_2_E2_Y))
+                agendatype2 = TEXT.render(agenda[1][2], 5, (WHITE))
+                screen.blit(agendatype2, (L_KA_ET_X, L_KA_2_T2_Y))
                 #add logo
                 screen.blit(logo, pygame.rect.Rect(L_LOGO_X,L_LOGO_Y,128,128))
                 pygame.display.flip()
@@ -241,13 +263,15 @@ while True:
                 screen.blit(agendadatum1, (L_KA_ED_X, L_KA_1_E1_Y))
                 agendaitem1 = TITLE.render(agenda[0][0], 5, (WHITE))
                 screen.blit(agendaitem1, (L_KA_ET_X, L_KA_1_E1_Y))
+                agendatype1 = TEXT.render(agenda[0][2], 5, (WHITE))
+                screen.blit(agendatype1, (L_KA_ET_X, L_KA_1_T1_Y))
                 #add logo
                 screen.blit(logo, pygame.rect.Rect(L_LOGO_X,L_LOGO_Y,128,128))
                 pygame.display.flip()
                 time.sleep(WAITTIME)
     
 
-    #partners waasland
+    #partners Waasland
     if LOCATION == "Waasland":
         screen.blit(partner1,(0,0))
         pygame.display.flip()
@@ -257,4 +281,10 @@ while True:
         time.sleep(WAITTIME)
     
     
+    #jaarverslag film Antwerpen Wintertuin
+    movie_count = movie_count + 1
+    if movie_count == 5 and LOCATION_DETAIL=="Wintertuin":
+        movie_count = 0
+        omxp = Popen(['omxplayer',MOVIE])
+        
     pygame.display.update()
