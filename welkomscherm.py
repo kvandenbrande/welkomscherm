@@ -59,7 +59,7 @@ if x == 1920 and y == 1080:
     L_KA_TITEL_X= 150
     L_KA_TITEL_Y= 150
     L_KA_ED_X = 150 # horizontaal afstand voor kameragenda datum
-    L_KA_ET_X = 300 # horizontaal afstand voor kameragenda event
+    L_KA_ET_X = 320 # horizontaal afstand voor kameragenda event
     L_KA_3_E1_Y = 300
     L_KA_3_E2_Y = 500
     L_KA_3_E3_Y = 700
@@ -85,7 +85,7 @@ else:
     L_KA_TITEL_X= (150*x)/1920
     L_KA_TITEL_Y= (150*y)/1080
     L_KA_ED_X = (150*x)/1920 # horizontaal afstand voor kameragenda datum
-    L_KA_ET_X = (300*x)/1920 # horizontaal afstand voor kameragenda event
+    L_KA_ET_X = (320*x)/1920 # horizontaal afstand voor kameragenda event
     L_KA_3_E1_Y = (300*y)/1080
     L_KA_3_E2_Y = (500*y)/1080
     L_KA_3_E3_Y = (700*y)/1080
