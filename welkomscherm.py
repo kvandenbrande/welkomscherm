@@ -382,6 +382,6 @@ while True:
     
     if movie_count == 5 and LOCATION_DETAIL == 'Wintertuin':
         movie_count = 0
-        omxp = Popen(['omxplayer', MOVIE])
+        #omxp = Popen(['omxplayer', MOVIE])
 
     pygame.display.update()
