@@ -29,7 +29,7 @@ WAITTIME = 10   #default time to wait between images (in seconds)
 MYSQLSERVER = "10.0.0.205"
 THICKNESS = 40
 LOCALEPATH = "/home/pi/welkomscherm/img/"
-MOVIE = '/home/pi/Desktop/jaaroverzicht_2016.mp4'
+MOVIE = '/home/pi/Desktop/jaaroverzicht_2015.mp4'
 movie_count=0
 
 #set up the window, max screensize, fullscreen no frames
