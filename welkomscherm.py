@@ -33,7 +33,7 @@ TEXT = pygame.font.SysFont('roboto', 35, bold=True)
 TITLE = pygame.font.SysFont('roboto', 50, bold=True)
 TITLE1 = pygame.font.SysFont('roboto', 75, bold=True)
 WHITE = (255, 255, 255)
-WAITTIME = 15  # default time to wait between images (in seconds)
+WAITTIME = 10  # default time to wait between images (in seconds)
 
 THICKNESS = 40
 LOCALEPATH = '/home/pi/welkomscherm/img/'
