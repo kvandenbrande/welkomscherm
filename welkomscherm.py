@@ -379,7 +379,6 @@ while True:
 
     minute = time.strftime("%M")
     movie_check = int(minute) % 10
-    print movie_check
 
     if movie_check == 0 and LOCATION_DETAIL == 'Wintertuin':
         if os.path.isfile('./movie.tmp'):
@@ -389,7 +388,6 @@ while True:
             minute_played = "OK"
             
         if minute_played != minute or minute_played == "OK":
-            print "play movie"
             omxp = Popen(['omxplayer', MOVIE])
             pidf = open('./movie.tmp', 'w')
             pidf.write(minute)
@@ -397,4 +395,4 @@ while True:
 
         
     
-    pygame.display.update()
+    #pygame.display.update()
