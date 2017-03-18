@@ -3,8 +3,8 @@ import json
 
 def DB_conn():
 
-    with open ('/home/pi/Desktop/welkomscherm_conf.json','r') as f:
-        config = json.load(f)
+    with open ('/home/pi/Desktop/welkomscherm_conf.json','r') as cfg:
+        config = json.load(cfg)
 
     host= config['DB']['host']
     user= config['DB']['user']
