@@ -382,8 +382,7 @@ while True:
 
     if movie_check == 0 and LOCATION_DETAIL == 'Wintertuin':
         if os.path.isfile('./movie.tmp'):
-            f = open('./movie.tmp',"r")
-            minute_played = f.read()
+            minute_played = open('./movie.tmp','r').read()
         else:
             minute_played = "OK"
             
@@ -394,5 +393,4 @@ while True:
             pidf.close()
 
         
-    
     #pygame.display.update()
