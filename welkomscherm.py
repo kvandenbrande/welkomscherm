@@ -139,7 +139,9 @@ while True:
     # if check event available in mysql else goto reclame
     # for each event teken event scherm
     
-    # try handling stead of ping
+    # try handling instead of ping
+    # try:
+    #     get_events(LOCATION):
 
     response = os.system('ping -c 1 ' + MYSQLSERVER)
     if response == 0:
