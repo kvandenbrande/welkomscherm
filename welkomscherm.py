@@ -49,69 +49,36 @@ pygame.mouse.set_visible(False)
 # locations
 # TV Waasland resolutie 1920x1080 as refence to other resolutions
 
-if x == 1920 and y == 1080:
-    L_STARTUP_X = 700
-    L_STARTUP_Y = 540
-    L_WELCOME_X = 150
-    L_WELCOME_Y = 800
-    L_LOGO_X = 1150
-    L_LOGO_Y = 800
-    L_BORDER_AX = 100
-    L_BORDER_AY = 100
-    L_BORDER_BX = 1400
-    L_BORDER_CY = 900
-    L_EVENT_X = 150
-    L_EVENTN_Y = 300
-    L_EVENTT_Y = 500
-    L_EVENTL_Y = 700
-    L_KA_TITEL_X = 150
-    L_KA_TITEL_Y = 150
-    L_KA_ED_X = 150  # horizontaal afstand voor kameragenda datum
-    L_KA_ET_X = 320  # horizontaal afstand voor kameragenda event
-    L_KA_3_E1_Y = 300
-    L_KA_3_E2_Y = 500
-    L_KA_3_E3_Y = 700
-    L_KA_2_E1_Y = 500
-    L_KA_2_E2_Y = 800
-    L_KA_1_E1_Y = 500
-    L_KA_3_T1_Y = 375
-    L_KA_3_T2_Y = 575
-    L_KA_3_T3_Y = 775
-    L_KA_2_T1_Y = 575
-    L_KA_2_T2_Y = 875
-    L_KA_1_T1_Y = 575
-else:
-
-    L_STARTUP_X = 700 * x / 1920
-    L_STARTUP_Y = 540 * y / 1080
-    L_WELCOME_X = 150 * x / 1920
-    L_WELCOME_Y = 800 * y / 1080
-    L_LOGO_X = 1150 * x / 1920
-    L_LOGO_Y = 800 * y / 1080
-    L_BORDER_AX = 100 * x / 1920
-    L_BORDER_AY = 100 * y / 1080
-    L_BORDER_BX = 1400 * x / 1920
-    L_BORDER_CY = 900 * y / 1080
-    L_EVENT_X = 150 * x / 1920
-    L_EVENTN_Y = 300 * y / 1080
-    L_EVENTT_Y = 500 * y / 1080
-    L_EVENTL_Y = 700 * y / 1080
-    L_KA_TITEL_X = 150 * x / 1920
-    L_KA_TITEL_Y = 150 * y / 1080
-    L_KA_ED_X = 150 * x / 1920  # horizontaal afstand voor kameragenda datum
-    L_KA_ET_X = 320 * x / 1920  # horizontaal afstand voor kameragenda event
-    L_KA_3_E1_Y = 300 * y / 1080
-    L_KA_3_E2_Y = 500 * y / 1080
-    L_KA_3_E3_Y = 700 * y / 1080
-    L_KA_2_E1_Y = 500 * y / 1080
-    L_KA_2_E2_Y = 800 * y / 1080
-    L_KA_1_E1_Y = 500 * y / 1080
-    L_KA_3_T1_Y = 375 * y / 1080
-    L_KA_3_T2_Y = 575 * y / 1080
-    L_KA_3_T3_Y = 775 * y / 1080
-    L_KA_2_T1_Y = 575 * y / 1080
-    L_KA_2_T2_Y = 875 * y / 1080
-    L_KA_1_T1_Y = 575 * y / 1080
+L_STARTUP_X = 700 * x / 1920
+L_STARTUP_Y = 540 * y / 1080
+L_WELCOME_X = 150 * x / 1920
+L_WELCOME_Y = 800 * y / 1080
+L_LOGO_X = 1150 * x / 1920
+L_LOGO_Y = 800 * y / 1080
+L_BORDER_AX = 100 * x / 1920
+L_BORDER_AY = 100 * y / 1080
+L_BORDER_BX = 1400 * x / 1920
+L_BORDER_CY = 900 * y / 1080
+L_EVENT_X = 150 * x / 1920
+L_EVENTN_Y = 300 * y / 1080
+L_EVENTT_Y = 500 * y / 1080
+L_EVENTL_Y = 700 * y / 1080
+L_KA_TITEL_X = 150 * x / 1920
+L_KA_TITEL_Y = 150 * y / 1080
+L_KA_ED_X = 150 * x / 1920  # horizontaal afstand voor kameragenda datum
+L_KA_ET_X = 320 * x / 1920  # horizontaal afstand voor kameragenda event
+L_KA_3_E1_Y = 300 * y / 1080
+L_KA_3_E2_Y = 500 * y / 1080
+L_KA_3_E3_Y = 700 * y / 1080
+L_KA_2_E1_Y = 500 * y / 1080
+L_KA_2_E2_Y = 800 * y / 1080
+L_KA_1_E1_Y = 500 * y / 1080
+L_KA_3_T1_Y = 375 * y / 1080
+L_KA_3_T2_Y = 575 * y / 1080
+L_KA_3_T3_Y = 775 * y / 1080
+L_KA_2_T1_Y = 575 * y / 1080
+L_KA_2_T2_Y = 875 * y / 1080
+L_KA_1_T1_Y = 575 * y / 1080
 
 # startup screen
 
@@ -171,6 +138,8 @@ while True:
     # if check connection to mysql else goto reclame
     # if check event available in mysql else goto reclame
     # for each event teken event scherm
+    
+    # try handling stead of ping
 
     response = os.system('ping -c 1 ' + MYSQLSERVER)
     if response == 0:
@@ -223,6 +192,8 @@ while True:
 ##    time.sleep(WAITTIME)
 
     # reclame events
+    
+    # try handling instead of ping result
 
     if response == 0:
         if get_agenda():
