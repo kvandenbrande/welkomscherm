@@ -15,18 +15,21 @@ from database import get_agenda
 pygame.init()
 
 # location check
-
-with open('/home/pi/Desktop/welkomscherm_conf.json', 'r') as f:
-    config = json.load(f)
+try:
+    with open('/home/pi/Desktop/welkomscherm_conf.json', 'r') as f:
+        config = json.load(f)
+except ValueError:
+     print 'Error: Decoding config has failed'
 
 LOCATION = config['LOCATION']['vestiging']
 LOCATION_DETAIL = config['LOCATION']['locatie']
-MYSQLSERVER = config['DB']['host']
-# config
 
-pidf = open('./online.tmp', 'w')
-pidf.write(str(os.getpid()))
-pidf.close()
+# config
+try:
+    with open("./online.tmp", "w") as processid:
+        processid.write(str(os.getpid()))
+except IOError:
+    print "Error: online.tmp cannot be made."
 
 STARTUP = pygame.font.SysFont('monospace', 25)
 TEXT = pygame.font.SysFont('roboto', 35, bold=True)
@@ -124,12 +127,10 @@ while True:
                      L_BORDER_CY), THICKNESS)
 
     # render text
-
     welcome = TITLE.render('VAN HARTE WELKOM', 5, WHITE)
     screen.blit(welcome, (L_WELCOME_X, L_WELCOME_Y))
 
     # add logo
-
     screen.blit(logo, pygame.rect.Rect(L_LOGO_X, L_LOGO_Y, 128, 128))
     pygame.display.flip()
     time.sleep(WAITTIME)
@@ -139,48 +140,34 @@ while True:
     # if check event available in mysql else goto reclame
     # for each event teken event scherm
     
-    # try handling instead of ping
-    # try:
-    #     get_events(LOCATION):
+    teller = 0
+    count = 0
+    try:
+        (events, count) = get_events(LOCATION)
+    except:
+        pass
+     
+    while count > 0:
+        screen.fill(load_background())
+        pygame.draw.line(screen, WHITE, (L_BORDER_AX - THICKNESS / 2 + 1, L_BORDER_AY),(L_BORDER_BX, L_BORDER_AY), THICKNESS)
+        pygame.draw.line(screen, WHITE, (L_BORDER_AX,L_BORDER_AY), (L_BORDER_AX,L_BORDER_CY), THICKNESS)
+        pygame.draw.line(screen, WHITE, (L_BORDER_AX - THICKNESS / 2 + 1, L_BORDER_CY),(L_BORDER_BX, L_BORDER_CY), THICKNESS)
+        pygame.draw.line(screen, WHITE, (L_BORDER_BX - THICKNESS / 2, L_BORDER_AY),(L_BORDER_BX - THICKNESS / 2,L_BORDER_CY), THICKNESS)
 
-    response = os.system('ping -c 1 ' + MYSQLSERVER)
-    if response == 0:
-        if get_events(LOCATION):
-            teller = 0
-            (events, count) = get_events(LOCATION)
-            while count > 0:
-                screen.fill(load_background())
-                pygame.draw.line(screen, WHITE, (L_BORDER_AX
-                                 - THICKNESS / 2 + 1, L_BORDER_AY),
-                                 (L_BORDER_BX, L_BORDER_AY), THICKNESS)
-                pygame.draw.line(screen, WHITE, (L_BORDER_AX,
-                                 L_BORDER_AY), (L_BORDER_AX,
-                                 L_BORDER_CY), THICKNESS)
-                pygame.draw.line(screen, WHITE, (L_BORDER_AX
-                                 - THICKNESS / 2 + 1, L_BORDER_CY),
-                                 (L_BORDER_BX, L_BORDER_CY), THICKNESS)
-                pygame.draw.line(screen, WHITE, (L_BORDER_BX
-                                 - THICKNESS / 2, L_BORDER_AY),
-                                 (L_BORDER_BX - THICKNESS / 2,
-                                 L_BORDER_CY), THICKNESS)
+        # render text
+        titelevent = TITLE.render(events[teller][0], 5, WHITE)
+        screen.blit(titelevent, (L_EVENT_X, L_EVENTN_Y))
+        starttime = TITLE.render(events[teller][1], 5, WHITE)
+        screen.blit(starttime, (L_EVENT_X, L_EVENTT_Y))
+        location = TITLE.render(events[teller][2], 5, WHITE)
+        screen.blit(location, (L_EVENT_X, L_EVENTL_Y))
 
-                # render text
-
-                titelevent = TITLE.render(events[teller][0], 5, WHITE)
-                screen.blit(titelevent, (L_EVENT_X, L_EVENTN_Y))
-                starttime = TITLE.render(events[teller][1], 5, WHITE)
-                screen.blit(starttime, (L_EVENT_X, L_EVENTT_Y))
-                location = TITLE.render(events[teller][2], 5, WHITE)
-                screen.blit(location, (L_EVENT_X, L_EVENTL_Y))
-
-                # add logo
-
-                screen.blit(logo, pygame.rect.Rect(L_LOGO_X, L_LOGO_Y,
-                            128, 128))
-                pygame.display.flip()
-                time.sleep(WAITTIME)
-                count = count - 1
-                teller = teller + 1
+        # add logo
+        screen.blit(logo, pygame.rect.Rect(L_LOGO_X, L_LOGO_Y,128, 128))
+        pygame.display.flip()
+        time.sleep(WAITTIME)
+        count = count - 1
+        teller = teller + 1
 
     # reclame 8876
 
@@ -197,146 +184,108 @@ while True:
     
     # try handling instead of ping result
 
-    if response == 0:
-        if get_agenda():
-            (agenda, count) = get_agenda()
-            if count == 3:
-                screen.fill(load_background())
-                pygame.draw.line(screen, WHITE, (L_BORDER_AX
-                                 - THICKNESS / 2 + 1, L_BORDER_AY),
-                                 (L_BORDER_BX, L_BORDER_AY), THICKNESS)
-                pygame.draw.line(screen, WHITE, (L_BORDER_AX,
-                                 L_BORDER_AY), (L_BORDER_AX,
-                                 L_BORDER_CY), THICKNESS)
-                pygame.draw.line(screen, WHITE, (L_BORDER_AX
-                                 - THICKNESS / 2 + 1, L_BORDER_CY),
-                                 (L_BORDER_BX, L_BORDER_CY), THICKNESS)
-                pygame.draw.line(screen, WHITE, (L_BORDER_BX
-                                 - THICKNESS / 2, L_BORDER_AY),
-                                 (L_BORDER_BX - THICKNESS / 2,
-                                 L_BORDER_CY), THICKNESS)
+    count = 0
+    try:
+        (agenda, count) = get_agenda()
+    except:
+        pass
+        
+    
+    if count == 3:
+        screen.fill(load_background())
+        pygame.draw.line(screen, WHITE, (L_BORDER_AX - THICKNESS / 2 + 1, L_BORDER_AY),(L_BORDER_BX, L_BORDER_AY), THICKNESS)
+        pygame.draw.line(screen, WHITE, (L_BORDER_AX, L_BORDER_AY), (L_BORDER_AX,L_BORDER_CY), THICKNESS)
+        pygame.draw.line(screen, WHITE, (L_BORDER_AX - THICKNESS / 2 + 1, L_BORDER_CY),(L_BORDER_BX, L_BORDER_CY), THICKNESS)
+        pygame.draw.line(screen, WHITE, (L_BORDER_BX - THICKNESS / 2, L_BORDER_AY),(L_BORDER_BX - THICKNESS / 2,L_BORDER_CY), THICKNESS)
 
-                # render text
+        # render text
+        KA_TITEL = TITLE1.render('Kameragenda', 5, WHITE)
+        screen.blit(KA_TITEL, (L_KA_TITEL_X, L_KA_TITEL_Y))
 
-                KA_TITEL = TITLE1.render('Kameragenda', 5, WHITE)
-                screen.blit(KA_TITEL, (L_KA_TITEL_X, L_KA_TITEL_Y))
+        # event1
+        agendadatum1 = TITLE.render(agenda[0][1], 5, WHITE)
+        screen.blit(agendadatum1, (L_KA_ED_X, L_KA_3_E1_Y))
+        agendaitem1 = TITLE.render(agenda[0][0], 5, WHITE)
+        screen.blit(agendaitem1, (L_KA_ET_X, L_KA_3_E1_Y))
+        agendatype1 = TEXT.render(agenda[0][2], 5, WHITE)
+        screen.blit(agendatype1, (L_KA_ET_X, L_KA_3_T1_Y))
 
-                # event1
+        # event2
+        agendadatum2 = TITLE.render(agenda[1][1], 5, WHITE)
+        screen.blit(agendadatum2, (L_KA_ED_X, L_KA_3_E2_Y))
+        agendaitem2 = TITLE.render(agenda[1][0], 5, WHITE)
+        screen.blit(agendaitem2, (L_KA_ET_X, L_KA_3_E2_Y))
+        agendatype2 = TEXT.render(agenda[1][2], 5, WHITE)
+        screen.blit(agendatype2, (L_KA_ET_X, L_KA_3_T2_Y))
 
-                agendadatum1 = TITLE.render(agenda[0][1], 5, WHITE)
-                screen.blit(agendadatum1, (L_KA_ED_X, L_KA_3_E1_Y))
-                agendaitem1 = TITLE.render(agenda[0][0], 5, WHITE)
-                screen.blit(agendaitem1, (L_KA_ET_X, L_KA_3_E1_Y))
-                agendatype1 = TEXT.render(agenda[0][2], 5, WHITE)
-                screen.blit(agendatype1, (L_KA_ET_X, L_KA_3_T1_Y))
+        # event3
+        agendadatum3 = TITLE.render(agenda[2][1], 5, WHITE)
+        screen.blit(agendadatum3, (L_KA_ED_X, L_KA_3_E3_Y))
+        agendaitem3 = TITLE.render(agenda[2][0], 5, WHITE)
+        screen.blit(agendaitem3, (L_KA_ET_X, L_KA_3_E3_Y))
+        agendatype3 = TEXT.render(agenda[2][2], 5, WHITE)
+        screen.blit(agendatype3, (L_KA_ET_X, L_KA_3_T3_Y))
 
-                # event2
+        # add logo
+        screen.blit(logo, pygame.rect.Rect(L_LOGO_X, L_LOGO_Y,128, 128))
+        pygame.display.flip()
+        time.sleep(WAITTIME)
 
-                agendadatum2 = TITLE.render(agenda[1][1], 5, WHITE)
-                screen.blit(agendadatum2, (L_KA_ED_X, L_KA_3_E2_Y))
-                agendaitem2 = TITLE.render(agenda[1][0], 5, WHITE)
-                screen.blit(agendaitem2, (L_KA_ET_X, L_KA_3_E2_Y))
-                agendatype2 = TEXT.render(agenda[1][2], 5, WHITE)
-                screen.blit(agendatype2, (L_KA_ET_X, L_KA_3_T2_Y))
+    if count == 2:
+        screen.fill(load_background())
+        pygame.draw.line(screen, WHITE, (L_BORDER_AX - THICKNESS / 2 + 1, L_BORDER_AY),(L_BORDER_BX, L_BORDER_AY), THICKNESS)
+        pygame.draw.line(screen, WHITE, (L_BORDER_AX, L_BORDER_AY), (L_BORDER_AX, L_BORDER_CY), THICKNESS)
+        pygame.draw.line(screen, WHITE, (L_BORDER_AX - THICKNESS / 2 + 1, L_BORDER_CY),(L_BORDER_BX, L_BORDER_CY), THICKNESS)
+        pygame.draw.line(screen, WHITE, (L_BORDER_BX - THICKNESS / 2, L_BORDER_AY),(L_BORDER_BX - THICKNESS / 2, L_BORDER_CY), THICKNESS)
 
-                # event3
+        # render text
+        KA_TITEL = TITLE1.render('Kameragenda', 5, WHITE)
+        screen.blit(KA_TITEL, (L_KA_TITEL_X, L_KA_TITEL_Y))
 
-                agendadatum3 = TITLE.render(agenda[2][1], 5, WHITE)
-                screen.blit(agendadatum3, (L_KA_ED_X, L_KA_3_E3_Y))
-                agendaitem3 = TITLE.render(agenda[2][0], 5, WHITE)
-                screen.blit(agendaitem3, (L_KA_ET_X, L_KA_3_E3_Y))
-                agendatype3 = TEXT.render(agenda[2][2], 5, WHITE)
-                screen.blit(agendatype3, (L_KA_ET_X, L_KA_3_T3_Y))
+        # event1
+        agendadatum1 = TITLE.render(agenda[0][1], 5, WHITE)
+        screen.blit(agendadatum1, (L_KA_ED_X, L_KA_2_E1_Y))
+        agendaitem1 = TITLE.render(agenda[0][0], 5, WHITE)
+        screen.blit(agendaitem1, (L_KA_ET_X, L_KA_2_E1_Y))
+        agendatype1 = TEXT.render(agenda[0][2], 5, WHITE)
+        screen.blit(agendatype1, (L_KA_ET_X, L_KA_2_T1_Y))
 
-                # add logo
+        # event2
+        agendadatum2 = TITLE.render(agenda[1][1], 5, WHITE)
+        screen.blit(agendadatum2, (L_KA_ED_X, L_KA_2_E2_Y))
+        agendaitem2 = TITLE.render(agenda[1][0], 5, WHITE)
+        screen.blit(agendaitem2, (L_KA_ET_X, L_KA_2_E2_Y))
+        agendatype2 = TEXT.render(agenda[1][2], 5, WHITE)
+        screen.blit(agendatype2, (L_KA_ET_X, L_KA_2_T2_Y))
 
-                screen.blit(logo, pygame.rect.Rect(L_LOGO_X, L_LOGO_Y,
-                            128, 128))
-                pygame.display.flip()
-                time.sleep(WAITTIME)
+        # add logo
+        screen.blit(logo, pygame.rect.Rect(L_LOGO_X, L_LOGO_Y,128, 128))
+        pygame.display.flip()
+        time.sleep(WAITTIME)
 
-            if count == 2:
-                screen.fill(load_background())
-                pygame.draw.line(screen, WHITE, (L_BORDER_AX
-                                 - THICKNESS / 2 + 1, L_BORDER_AY),
-                                 (L_BORDER_BX, L_BORDER_AY), THICKNESS)
-                pygame.draw.line(screen, WHITE, (L_BORDER_AX,
-                                 L_BORDER_AY), (L_BORDER_AX,
-                                 L_BORDER_CY), THICKNESS)
-                pygame.draw.line(screen, WHITE, (L_BORDER_AX
-                                 - THICKNESS / 2 + 1, L_BORDER_CY),
-                                 (L_BORDER_BX, L_BORDER_CY), THICKNESS)
-                pygame.draw.line(screen, WHITE, (L_BORDER_BX
-                                 - THICKNESS / 2, L_BORDER_AY),
-                                 (L_BORDER_BX - THICKNESS / 2,
-                                 L_BORDER_CY), THICKNESS)
+    if count == 1:
+        screen.fill(load_background())
+        pygame.draw.line(screen, WHITE, (L_BORDER_AX - THICKNESS / 2 + 1, L_BORDER_AY),(L_BORDER_BX, L_BORDER_AY), THICKNESS)
+        pygame.draw.line(screen, WHITE, (L_BORDER_AX, L_BORDER_AY), (L_BORDER_AX, L_BORDER_CY), THICKNESS)
+        pygame.draw.line(screen, WHITE, (L_BORDER_AX - THICKNESS / 2 + 1, L_BORDER_CY),(L_BORDER_BX, L_BORDER_CY), THICKNESS)
+        pygame.draw.line(screen, WHITE, (L_BORDER_BX - THICKNESS / 2, L_BORDER_AY),(L_BORDER_BX - THICKNESS / 2, L_BORDER_CY), THICKNESS)
 
-                # render text
+        # render text
+        KA_TITEL = TITLE1.render('Kameragenda', 5, WHITE)
+        screen.blit(KA_TITEL, (L_KA_TITEL_X, L_KA_TITEL_Y))
 
-                KA_TITEL = TITLE1.render('Kameragenda', 5, WHITE)
-                screen.blit(KA_TITEL, (L_KA_TITEL_X, L_KA_TITEL_Y))
+        # event1
+        agendadatum1 = TITLE.render(agenda[0][1], 5, WHITE)
+        screen.blit(agendadatum1, (L_KA_ED_X, L_KA_1_E1_Y))
+        agendaitem1 = TITLE.render(agenda[0][0], 5, WHITE)
+        screen.blit(agendaitem1, (L_KA_ET_X, L_KA_1_E1_Y))
+        agendatype1 = TEXT.render(agenda[0][2], 5, WHITE)
+        screen.blit(agendatype1, (L_KA_ET_X, L_KA_1_T1_Y))
 
-                # event1
-
-                agendadatum1 = TITLE.render(agenda[0][1], 5, WHITE)
-                screen.blit(agendadatum1, (L_KA_ED_X, L_KA_2_E1_Y))
-                agendaitem1 = TITLE.render(agenda[0][0], 5, WHITE)
-                screen.blit(agendaitem1, (L_KA_ET_X, L_KA_2_E1_Y))
-                agendatype1 = TEXT.render(agenda[0][2], 5, WHITE)
-                screen.blit(agendatype1, (L_KA_ET_X, L_KA_2_T1_Y))
-
-                # event2
-
-                agendadatum2 = TITLE.render(agenda[1][1], 5, WHITE)
-                screen.blit(agendadatum2, (L_KA_ED_X, L_KA_2_E2_Y))
-                agendaitem2 = TITLE.render(agenda[1][0], 5, WHITE)
-                screen.blit(agendaitem2, (L_KA_ET_X, L_KA_2_E2_Y))
-                agendatype2 = TEXT.render(agenda[1][2], 5, WHITE)
-                screen.blit(agendatype2, (L_KA_ET_X, L_KA_2_T2_Y))
-
-                # add logo
-
-                screen.blit(logo, pygame.rect.Rect(L_LOGO_X, L_LOGO_Y,
-                            128, 128))
-                pygame.display.flip()
-                time.sleep(WAITTIME)
-
-            if count == 1:
-                screen.fill(load_background())
-                pygame.draw.line(screen, WHITE, (L_BORDER_AX
-                                 - THICKNESS / 2 + 1, L_BORDER_AY),
-                                 (L_BORDER_BX, L_BORDER_AY), THICKNESS)
-                pygame.draw.line(screen, WHITE, (L_BORDER_AX,
-                                 L_BORDER_AY), (L_BORDER_AX,
-                                 L_BORDER_CY), THICKNESS)
-                pygame.draw.line(screen, WHITE, (L_BORDER_AX
-                                 - THICKNESS / 2 + 1, L_BORDER_CY),
-                                 (L_BORDER_BX, L_BORDER_CY), THICKNESS)
-                pygame.draw.line(screen, WHITE, (L_BORDER_BX
-                                 - THICKNESS / 2, L_BORDER_AY),
-                                 (L_BORDER_BX - THICKNESS / 2,
-                                 L_BORDER_CY), THICKNESS)
-
-                # render text
-
-                KA_TITEL = TITLE1.render('Kameragenda', 5, WHITE)
-                screen.blit(KA_TITEL, (L_KA_TITEL_X, L_KA_TITEL_Y))
-
-                # event1
-
-                agendadatum1 = TITLE.render(agenda[0][1], 5, WHITE)
-                screen.blit(agendadatum1, (L_KA_ED_X, L_KA_1_E1_Y))
-                agendaitem1 = TITLE.render(agenda[0][0], 5, WHITE)
-                screen.blit(agendaitem1, (L_KA_ET_X, L_KA_1_E1_Y))
-                agendatype1 = TEXT.render(agenda[0][2], 5, WHITE)
-                screen.blit(agendatype1, (L_KA_ET_X, L_KA_1_T1_Y))
-
-                # add logo
-
-                screen.blit(logo, pygame.rect.Rect(L_LOGO_X, L_LOGO_Y,
-                            128, 128))
-                pygame.display.flip()
-                time.sleep(WAITTIME)
+        # add logo
+        screen.blit(logo, pygame.rect.Rect(L_LOGO_X, L_LOGO_Y,128, 128))
+        pygame.display.flip()
+        time.sleep(WAITTIME)
 
     # partners Waasland
 
@@ -354,16 +303,19 @@ while True:
     movie_check = int(minute) % 10
 
     if movie_check == 0 and LOCATION_DETAIL == 'Wintertuin':
-        if os.path.isfile('./movie.tmp'):
+        try:
             minute_played = open('./movie.tmp','r').read()
-        else:
+        except IOError:
+            print "Error: movie.tmp does not appear to exist."
             minute_played = "OK"
+      
             
         if minute_played != minute or minute_played == "OK":
             omxp = Popen(['omxplayer', MOVIE])
-            pidf = open('./movie.tmp', 'w')
-            pidf.write(minute)
-            pidf.close()
+            try:
+                with open('./movie.tmp', 'w') as movielog:
+                    movielog.write(minute)
+            except IOError:
+                print "Error: movie.tmp cannot be made."
 
-        
-    #pygame.display.update()
+       
