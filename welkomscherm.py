@@ -143,7 +143,7 @@ while True:
     teller = 0
     count = 0
     try:
-        (events, count) = get_events(LOCATION)
+        (events, count) = get_events(LOCATION,LOCATION_DETAIL)
     except:
         pass
      
@@ -170,10 +170,10 @@ while True:
         teller = teller + 1
 
     # reclame 8876
-
-    screen.blit(sms, (0, 0))
-    pygame.display.flip()
-    time.sleep(WAITTIME)
+    if LOCATION != 'Auditorium':
+        screen.blit(sms, (0, 0))
+        pygame.display.flip()
+        time.sleep(WAITTIME)
 
 ##    #reclame hoofdevent
 ##    screen.blit(event,(0,0))
@@ -309,7 +309,7 @@ while True:
             print "Error: movie.tmp does not appear to exist."
             minute_played = "OK"
       
-            
+
         if minute_played != minute or minute_played == "OK":
             omxp = Popen(['omxplayer', MOVIE])
             try:
