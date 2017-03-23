@@ -20,7 +20,7 @@ def get_events(location,detail):
 
     cursor = DB_conn()
     events = None
-    if location == "Antwerpen":
+    if location == "Antwerpen" and detail !="Auditorium":
         cursor.execute("SELECT event, DATE_FORMAT(starttijd,'%H:%i'),locatie FROM welkomscherm WHERE vestiging = 'Antwerpen' AND datum = CURDATE() AND eindtijd >= CURTIME() ORDER BY starttijd ASC")
         events = cursor.fetchall()
         count = cursor.rowcount
@@ -28,7 +28,7 @@ def get_events(location,detail):
         cursor.execute("SELECT event, DATE_FORMAT(starttijd,'%H:%i'),locatie FROM welkomscherm WHERE vestiging = 'Waasland' AND datum = CURDATE() AND eindtijd >= CURTIME() ORDER BY starttijd ASC")
         events = cursor.fetchall()
         count = cursor.rowcount
-    if detail == "Auditorium":
+    if location == "Antwerpen" and detail == "Auditorium":
         cursor.execute("SELECT event, DATE_FORMAT(starttijd,'%H:%i'),locatie FROM welkomscherm WHERE locatie like '%auditorium%' AND datum = CURDATE() AND eindtijd >= CURTIME() ORDER BY starttijd ASC")
         events = cursor.fetchall()
         count = cursor.rowcount
