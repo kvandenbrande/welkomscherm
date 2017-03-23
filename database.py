@@ -28,6 +28,10 @@ def get_events(location):
         cursor.execute("SELECT event, DATE_FORMAT(starttijd,'%H:%i'),locatie FROM welkomscherm WHERE vestiging = 'Waasland' AND datum = CURDATE() AND eindtijd >= CURTIME() ORDER BY starttijd ASC")
         events = cursor.fetchall()
         count = cursor.rowcount
+    if location == "Auditorium":
+        cursor.execute("SELECT event, DATE_FORMAT(starttijd,'%H:%i'),locatie FROM welkomscherm WHERE locatie like '%auditorium%' AND datum = CURDATE() AND eindtijd >= CURTIME() ORDER BY starttijd ASC")
+        events = cursor.fetchall()
+        count = cursor.rowcount
     return events, count
 
 
