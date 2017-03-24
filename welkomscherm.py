@@ -11,6 +11,7 @@ from pygame.locals import *
 from background import load_background
 from database import get_events
 from database import get_agenda
+from mpd import MPDClient
 
 pygame.init()
 
@@ -37,11 +38,14 @@ TITLE = pygame.font.SysFont('roboto', 50, bold=True)
 TITLE1 = pygame.font.SysFont('roboto', 75, bold=True)
 WHITE = (255, 255, 255)
 WAITTIME = 10  # default time to wait between images (in seconds)
-
 THICKNESS = 40
+
+# media files
 LOCALEPATH = '/home/pi/welkomscherm/img/'
 MOVIE = '/home/pi/Desktop/jaaroverzicht_2015.mp4'
-
+STREAM = "http://lb.zenfm.be/zenfm.mp3"
+client = MPDClient()
+client.connect("localhost",6600)
 # set up the window, max screensize, fullscreen no frames
 
 modes = pygame.display.list_modes()
@@ -111,6 +115,16 @@ partner2 = pygame.transform.scale(partner2, max(modes))
 
 while True:
     # startscherm
+    
+    # play zenfm radio in Auditorium
+    if LOCATION_DETAIL == 'Auditorium':
+        try:
+            if client.status()['state']in('pause','stop'):
+                client.clear()
+                client.add(STREAM)
+                client.play()
+        except:
+            pass
     # tekenen van welkom scherm ipv afbeelding
     
     screen.fill(load_background())
@@ -170,7 +184,7 @@ while True:
         teller = teller + 1
 
     # reclame 8876
-    if LOCATION != 'Auditorium':
+    if LOCATION_DETAIL != 'Auditorium':
         screen.blit(sms, (0, 0))
         pygame.display.flip()
         time.sleep(WAITTIME)
