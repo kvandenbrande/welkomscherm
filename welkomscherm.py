@@ -44,8 +44,7 @@ THICKNESS = 40
 LOCALEPATH = '/home/pi/welkomscherm/img/'
 MOVIE = '/home/pi/Desktop/jaaroverzicht_2015.mp4'
 STREAM = "http://lb.zenfm.be/zenfm.mp3"
-client = MPDClient()
-client.connect("localhost",6600)
+
 # set up the window, max screensize, fullscreen no frames
 
 modes = pygame.display.list_modes()
@@ -119,6 +118,8 @@ while True:
     # play zenfm radio in Auditorium
     if LOCATION_DETAIL == 'Auditorium':
         try:
+            clientclient = MPDClient()
+            client.connect("localhost",6600)            
             if client.status()['state']in('pause','stop'):
                 client.clear()
                 client.add(STREAM)
