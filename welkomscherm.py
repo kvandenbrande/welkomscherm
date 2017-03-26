@@ -118,7 +118,7 @@ while True:
     # play zenfm radio in Auditorium
     if LOCATION_DETAIL == 'Auditorium':
         try:
-            clientclient = MPDClient()
+            client = MPDClient()
             client.connect("localhost",6600)            
             if client.status()['state']in('pause','stop'):
                 client.clear()
