@@ -115,7 +115,7 @@ partner2 = pygame.transform.scale(partner2, max(modes))
 while True:
     # startscherm
     
-    # play zenfm radio in Auditorium
+    # play background sound zenfm radio in Auditorium
     if LOCATION_DETAIL == 'Auditorium':
         try:
             client = MPDClient()
