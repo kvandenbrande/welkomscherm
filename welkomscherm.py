@@ -42,7 +42,7 @@ THICKNESS = 40
 
 # media files
 LOCALEPATH = '/home/pi/welkomscherm/img/'
-MOVIE = '/home/pi/Desktop/jaaroverzicht_2015.mp4'
+MOVIE = '/home/pi/Desktop/jaaroverzicht.mp4'
 STREAM = "http://lb.zenfm.be/zenfm.mp3"
 
 # set up the window, max screensize, fullscreen no frames
