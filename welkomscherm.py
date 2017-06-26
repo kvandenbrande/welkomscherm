@@ -99,9 +99,9 @@ sms = pygame.image.load(LOCALEPATH + '8876.jpg')
 sms = sms.convert()
 sms = pygame.transform.scale(sms, max(modes))
 
-event = pygame.image.load(LOCALEPATH +'scherm.jpg')
-event = event.convert()
-event = pygame.transform.scale(event, max(modes))
+#event = pygame.image.load(LOCALEPATH +'scherm.jpg')
+#event = event.convert()
+#event = pygame.transform.scale(event, max(modes))
 
 partner1 = pygame.image.load(LOCALEPATH + 'PP_CORP.jpg')
 partner1 = partner1.convert()
@@ -191,9 +191,9 @@ while True:
         time.sleep(WAITTIME)
 
 ##    #reclame hoofdevent
-    screen.blit(event,(0,0))
-    pygame.display.flip()
-    time.sleep(WAITTIME)
+#    screen.blit(event,(0,0))
+#    pygame.display.flip()
+#    time.sleep(WAITTIME)
 
     # reclame events
     
