@@ -41,7 +41,7 @@ def get_agenda():
 
     cursor= DB_conn()
     agenda = None
-    cursor.execute("SELECT event, DATE_FORMAT(datum,'%d %M '), type FROM kameragenda WHERE datum >= CURDATE() ORDER BY datum DESC LIMIT 3")
+    cursor.execute("SELECT event, DATE_FORMAT(datum,'%d %M '), type FROM kameragenda WHERE datum >= CURDATE() ORDER BY datum ASC LIMIT 3")
     agenda = cursor.fetchall()
     count = cursor.rowcount
     return agenda, count
