@@ -102,9 +102,9 @@ logo = pygame.image.load(LOCALEPATHIMAGE + 'VOKA_AW_LOGO_CMYK668.jpg')
 ##sms = sms.convert()
 ##sms = pygame.transform.scale(sms, max(modes))
 
-#event = pygame.image.load(LOCALEPATHIMAGE +'EF.jpg')
-#event = event.convert()
-#event = pygame.transform.scale(event, max(modes))
+event = pygame.image.load(LOCALEPATHIMAGE +'scherm.jpg')
+event = event.convert()
+event = pygame.transform.scale(event, max(modes))
 
 partner1 = pygame.image.load(LOCALEPATHIMAGE + 'PP_CORP.jpg')
 partner1 = partner1.convert()
@@ -195,10 +195,10 @@ while True:
 ##        pygame.display.flip()
 ##        time.sleep(WAITTIME)
 
-##    #reclame hoofdevent
-#    screen.blit(event,(0,0))
-#    pygame.display.flip()
-#    time.sleep(WAITTIME)
+#    #reclame hoofdevent
+    screen.blit(event,(0,0))
+    pygame.display.flip()
+    time.sleep(WAITTIME)
     
     # try handling instead of ping result
 
