@@ -47,6 +47,7 @@ WHITE = (255, 255, 255)
 WAITTIME = 10  # default time to wait between images (in seconds)
 THICKNESS = 40
 
+RECLAME_EVENT = 0 # edit to show event on screen
 
 # set up the window, max screensize, fullscreen no frames
 
@@ -196,9 +197,10 @@ while True:
 ##        time.sleep(WAITTIME)
 
 #    #reclame hoofdevent
-    screen.blit(event,(0,0))
-    pygame.display.flip()
-    time.sleep(WAITTIME)
+    if RECLAME_EVENT != 0:
+        screen.blit(event,(0,0))
+        pygame.display.flip()
+        time.sleep(WAITTIME)
     
     # try handling instead of ping result
 
