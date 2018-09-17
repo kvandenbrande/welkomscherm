@@ -12,10 +12,8 @@ def DB_conn():
     passwd= config['DB']['passwd']
     db= config['DB']['db']
 
-    db=MySQLdb.connect(host,user,passwd,db)	
+    db=MySQLdb.connect(host,user,passwd,dbcharset='utf8',use_unicode=True)	
     cursor=db.cursor()
-    cursor.execute("SET NAMES utf8mb4")
-    cursor.execute("SET lc_time_names = 'nl_NL'")
     return cursor
 
 def get_events(location,detail):
