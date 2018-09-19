@@ -12,7 +12,7 @@ def DB_conn():
     passwd= config['DB']['passwd']
     db= config['DB']['db']
 
-    db=MySQLdb.connect(host,user,passwd,dbcharset='utf8',use_unicode=True)
+    db=MySQLdb.connect(host,user,passwd,db,charset='utf8',use_unicode=True)
     cursor=db.cursor()
     return cursor
 
