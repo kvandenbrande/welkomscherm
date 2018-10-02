@@ -14,6 +14,7 @@ def DB_conn():
 
     db=MySQLdb.connect(host,user,passwd,db,charset='utf8',use_unicode=True)
     cursor=db.cursor()
+    cursor.execute("SET lc_time_names = 'nl_BE'")
     return cursor
 
 def get_events(location,detail):
