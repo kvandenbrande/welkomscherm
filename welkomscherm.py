@@ -102,7 +102,7 @@ WHITE = (255, 255, 255)
 WAITTIME = 10  # default time to wait between images (in seconds)
 THICKNESS = 40
 
-RECLAME_EVENT = 1 # edit to show event on screen, 0 = no show, anything else = show
+RECLAME_EVENT = 0 # edit to show event on screen, 0 = no show, anything else = show
 
 # set up the window, max screensize, fullscreen no frames
 
