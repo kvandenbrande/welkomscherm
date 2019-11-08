@@ -171,6 +171,10 @@ partner2 = pygame.image.load(LOCALEPATHIMAGE + 'PP_BUSIACT.jpg')
 partner2 = partner2.convert()
 partner2 = pygame.transform.scale(partner2, max(modes))
 
+werken = pygame.image.load(LOCALEPATHIMAGE +'werken.jpg')
+werken = werken.convert()
+werken = pygame.transform.scale(werken, max(modes))
+
 # run the loop
 
 while True:
@@ -377,6 +381,9 @@ while True:
         pygame.display.flip()
         time.sleep(WAITTIME)
         screen.blit(partner2, (0, 0))
+        pygame.display.flip()
+        time.sleep(WAITTIME)
+        screen.blit(werken, (0, 0))
         pygame.display.flip()
         time.sleep(WAITTIME)
 
